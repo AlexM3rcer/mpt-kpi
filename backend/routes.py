@@ -20,7 +20,9 @@ def users():
         user = User(
             first_name=data["first_name"],
             last_name=data["last_name"],
+            middle_name=data["middle_name"],
             email=data["email"],
+            phone_number=data["phone_number"],
         )
         db.session.add(user)
         db.session.commit()
