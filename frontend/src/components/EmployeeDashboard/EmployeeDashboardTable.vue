@@ -11,7 +11,7 @@
       <th class="controls-column"></th>
     </tr>
     <tr v-for="employee in employees" :key="employee.id">
-      <td class="employee-id">{{ employee.id }}</td>
+      <td class="employee-id">{{ employee.id + 1 }}</td>
       <td class="name">{{ employee.first_name }}</td>
       <td class="last-name">{{ employee.last_name }}</td>
       <td class="surname">{{ employee.surname }}</td>

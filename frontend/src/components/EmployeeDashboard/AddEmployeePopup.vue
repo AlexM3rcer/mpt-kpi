@@ -57,7 +57,12 @@
             v-model="email"
           />
         </div>
-        <input class="button" type="submit" value="Сохранить" />
+        <input
+          class="button"
+          type="submit"
+          value="Сохранить"
+          @click="$emit('update:modelValue', false)"
+        />
       </form>
     </div>
   </PopupTypeMinimal>
