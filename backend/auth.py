@@ -1,11 +1,15 @@
 from flask import Blueprint, jsonify, request, url_for
 from flask_login import login_user, logout_user
 from flask_mail import Message
+import jwt
+import datetime
+import secrets
 
 from extensions import db, mail
 from models import User
 
 auth_bp = Blueprint("auth", __name__)
+SECRET_KEY = secrets.token_hex(32)  #Генерация ключа, мб поместить в другое место
 
 @auth_bp.route("/login", methods=["POST"])
 def login():
@@ -28,7 +32,11 @@ def reset_password():
     if not user:
         return jsonify({"error": "User not found"}), 404
 
-    token = user.id  # Using ID as an example token
+    #создаем токен
+    token = jwt.encode({
+        "sub": user.id,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1) #время действия токена 1 час
+    }, SECRET_KEY, algorithm="HS256")
     reset_url = url_for("auth.complete_reset", token=token, _external=True)
 
     msg = Message("Password Reset Request", recipients=[user.email])
@@ -39,7 +47,14 @@ def reset_password():
 
 @auth_bp.route("/reset_password/<token>", methods=["POST"])
 def complete_reset(token):
-    user = User.query.get(int(token))
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithm=["HS256"])
+        user_id = payload["sub"]
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Token has expired"}), 400
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid token"}), 400
+    user = User.query.get(user_id)
     if not user:
         return jsonify({"error": "Invalid token"}), 400
 
