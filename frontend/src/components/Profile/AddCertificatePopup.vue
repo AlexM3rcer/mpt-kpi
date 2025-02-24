@@ -1,18 +1,14 @@
 <template>
-  <popup-type-minimal
-    v-if="modelValue"
-    v-bind="$attrs"
-    @close="$emit('update:modelValue', false)"
-  >
-    <div class="add-cerificate">
-      <h2 class="popup-title">Добавить сертификат</h2>
-      <form class="cerificate-form">
-        <div class="form-inputs">
-          <select class="input">
-            <option>Название критерия</option>
-          </select>
-          <many-file-input />
-          <!--<input
+	<popup-type-minimal v-if="modelValue" v-bind="$attrs" @close="$emit('update:modelValue', false)">
+		<div class="add-cerificate">
+			<h2 class="popup-title">Добавить сертификат</h2>
+			<form class="cerificate-form">
+				<div class="form-inputs">
+					<select class="input">
+						<option>Название критерия</option>
+					</select>
+					<many-file-input />
+					<!--<input
             class="input file-input"
             type="file"
             id="certificate"
@@ -20,25 +16,25 @@
             accept="image/png, image/jpeg"
           />
           -->
-        </div>
-        <input class="button" type="submit" value="Сохранить" />
-      </form>
-    </div>
-  </popup-type-minimal>
+				</div>
+				<input class="button" type="submit" value="Сохранить" />
+			</form>
+		</div>
+	</popup-type-minimal>
 </template>
 
 <script>
-import PopupTypeMinimal from "@/components/Popup/TypeMinimal.vue";
-import ManyFileInput from "@/components/Utils/ManyFileInput.vue";
+import PopupTypeMinimal from '@/components/Popup/TypeMinimal.vue'
+import ManyFileInput from '@/components/Utils/ManyFileInput.vue'
 
 export default {
-  props: ["modelValue"],
+	props: ['modelValue'],
 
-  components: {
-    PopupTypeMinimal,
-    ManyFileInput,
-  },
-};
+	components: {
+		PopupTypeMinimal,
+		ManyFileInput,
+	},
+}
 </script>
 
 <style lang="sass" scoped>

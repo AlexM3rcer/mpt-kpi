@@ -1,55 +1,41 @@
 <template>
-  <header id="dashboard-header">
-    <div class="dashboard-navigation">
-      <h1 class="section-header-title">Сотрудники</h1>
-      <router-link :to="{ name: 'profile' }">Личный кабинет</router-link>
-    </div>
-    <div class="dashboard-filters">
-      <input
-        class="input"
-        type="text"
-        id="filter-text"
-        placeholder="Поиск"
-        v-model="filterText"
-      />
-      <select class="input" v-model="filterJobId">
-        <option>Должность</option>
-      </select>
-      <div
-        class="add-employee button"
-        @click="$emit('showAddEmployeePopup', true)"
-      >
-        <svg
-          class="add-employee-icon"
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 16V2M2 9H16"
-            stroke="white"
-            stroke-width="3"
-            stroke-linecap="round"
-          />
-        </svg>
-        <span>Добавить</span>
-      </div>
-    </div>
-  </header>
+	<header id="dashboard-header">
+		<div class="dashboard-navigation">
+			<h1 class="section-header-title">Сотрудники</h1>
+			<router-link :to="{name: 'profile'}">Личный кабинет</router-link>
+		</div>
+		<div class="dashboard-filters">
+			<input class="input" type="text" id="filter-text" placeholder="Поиск" v-model="filterText" />
+			<select class="input" v-model="filterJobId">
+				<option>Должность</option>
+			</select>
+			<div class="add-employee button" @click="$emit('showAddEmployeePopup', true)">
+				<svg
+					class="add-employee-icon"
+					width="18"
+					height="18"
+					viewBox="0 0 18 18"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<path d="M9 16V2M2 9H16" stroke="white" stroke-width="3" stroke-linecap="round" />
+				</svg>
+				<span>Добавить</span>
+			</div>
+		</div>
+	</header>
 </template>
 
 <script>
 export default {
-  emits: ["showAddEmployeePopup"],
-  data() {
-    return {
-      filterText: "",
-      filterJobId: 0,
-    };
-  },
-};
+	emits: ['showAddEmployeePopup'],
+	data() {
+		return {
+			filterText: '',
+			filterJobId: 0,
+		}
+	},
+}
 </script>
 
 <style lang="sass" scoped>
