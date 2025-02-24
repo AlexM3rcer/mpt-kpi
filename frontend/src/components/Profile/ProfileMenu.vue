@@ -1,33 +1,31 @@
 <template>
-  <div id="menu">
-    <div id="staff">
-      <div class="profile">
-        <img
-          class="profile-photo"
-          src="@/../static/images/profile-no-photo.jpeg"
-          alt="Profile photo"
-        />
-        <h3 class="profile-name">Миколяй Антон Дмитриевич</h3>
-      </div>
-      <ul class="staff-data">
-        <ul class="staff-field">
-          <b class="staff-field-name">Должность:</b>
-          Библиотекарь
-        </ul>
-        <ul class="staff-field">
-          <b class="staff-field-name">Номер телефона:</b>
-          +7 (963) 650-42-93
-        </ul>
-        <ul class="staff-field">
-          <b class="staff-field-name">Рабочая почта:</b>
-          pochta@mail.ru
-        </ul>
-      </ul>
-    </div>
-    <router-link :to="{ name: 'admin' }" class="button"
-      >Управление сотрудниками</router-link
-    >
-  </div>
+	<div id="menu">
+		<div id="staff">
+			<div class="profile">
+				<img
+					class="profile-photo"
+					src="@/../static/images/profile-no-photo.jpeg"
+					alt="Profile photo"
+				/>
+				<h3 class="profile-name">Миколяй Антон Дмитриевич</h3>
+			</div>
+			<ul class="staff-data">
+				<ul class="staff-field">
+					<b class="staff-field-name">Должность:</b>
+					Библиотекарь
+				</ul>
+				<ul class="staff-field">
+					<b class="staff-field-name">Номер телефона:</b>
+					+7 (963) 650-42-93
+				</ul>
+				<ul class="staff-field">
+					<b class="staff-field-name">Рабочая почта:</b>
+					pochta@mail.ru
+				</ul>
+			</ul>
+		</div>
+		<router-link :to="{name: 'admin'}" class="button">Управление сотрудниками</router-link>
+	</div>
 </template>
 
 <style lang="sass" scoped>

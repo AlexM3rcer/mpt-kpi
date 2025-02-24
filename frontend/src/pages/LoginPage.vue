@@ -1,72 +1,61 @@
 <template>
-  <div class="auth-container">
-    <h1>ЦГБ им А.С. Пушкина г. Орёл</h1>
-    <div class="popup-wrapper">
-      <h2 class="auth-title">Вход</h2>
-      <form class="auth-form" @submit.prevent="sendLoginRequest">
-        <div class="input-container">
-          <input
-            v-model="email"
-            type="text"
-            class="text-input"
-            name="login"
-            placeholder="Логин"
-          />
-          <input
-            v-model="password"
-            type="password"
-            class="text-input"
-            name="password"
-            placeholder="Пароль"
-          />
-        </div>
-        <router-link :to="{ name: 'profile' }">
-          <input
-            type="submit"
-            class="submit-input"
-            name="signin"
-            value="Войти"
-          />
-        </router-link>
-      </form>
-    </div>
-  </div>
+	<div class="auth-container">
+		<h1>ЦГБ им А.С. Пушкина г. Орёл</h1>
+		<div class="popup-wrapper">
+			<h2 class="auth-title">Вход</h2>
+			<form class="auth-form" @submit.prevent="sendLoginRequest">
+				<div class="input-container">
+					<input v-model="email" type="text" class="text-input" name="login" placeholder="Логин" />
+					<input
+						v-model="password"
+						type="password"
+						class="text-input"
+						name="password"
+						placeholder="Пароль"
+					/>
+				</div>
+				<router-link :to="{name: 'profile'}">
+					<input type="submit" class="submit-input" name="signin" value="Войти" />
+				</router-link>
+			</form>
+		</div>
+	</div>
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
 
 export default {
-  data() {
-    return {
-      email: "",
-      password: "",
-    };
-  },
+	data() {
+		return {
+			email: '',
+			password: '',
+		}
+	},
 
-  computed: {
-    formValid() {
-      return this.emailValid && this.password != "";
-    },
+	computed: {
+		formValid() {
+			return this.emailValid && this.password != ''
+		},
 
-    emailValid() {
-      return String(this.email)
-        .toLowerCase()
-        .match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-    },
-  },
-  methods: {
-    sendLoginRequest() {
-      if (!this.formValid) return;
-      return axios.post("api/auth/login/", {
-        email: this.email,
-        password: this.password,
-      });
-    },
-  },
-};
+		emailValid() {
+			return String(this.email)
+				.toLowerCase()
+				.match(
+					/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+				)
+		},
+	},
+	methods: {
+		sendLoginRequest() {
+			if (!this.formValid) return
+			return axios.post('api/auth/login/', {
+				email: this.email,
+				password: this.password,
+			})
+		},
+	},
+}
 </script>
 
 <style lang="sass" scoped>

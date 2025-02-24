@@ -1,24 +1,18 @@
 <template>
-  <transition name="left">
-    <Teleport to="body">
-      <aside
-        :key="key"
-        class="minimal-modal-window minimal-modal-window_centralize"
-      >
-        <div class="minimal-modal-window__backdrop" @click="$emit('close')" />
+	<transition name="left">
+		<Teleport to="body">
+			<aside :key="key" class="minimal-modal-window minimal-modal-window_centralize">
+				<div class="minimal-modal-window__backdrop" @click="$emit('close')" />
 
-        <section class="minimal-modal-window__content">
-          <button
-            class="minimal-modal-window__close hover-scaling"
-            @click="$emit('close')"
-          >
-            <img src="@/../static/icons/cross.svg" alt="Close" />
-          </button>
-          <slot />
-        </section>
-      </aside>
-    </Teleport>
-  </transition>
+				<section class="minimal-modal-window__content">
+					<button class="minimal-modal-window__close hover-scaling" @click="$emit('close')">
+						<img src="@/../static/icons/cross.svg" alt="Close" />
+					</button>
+					<slot />
+				</section>
+			</aside>
+		</Teleport>
+	</transition>
 </template>
 
 <style lang="sass" scoped>
