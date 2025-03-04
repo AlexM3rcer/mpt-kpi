@@ -154,3 +154,4 @@ cython_debug/
 #.idea/
 
 widgets/utils/ironov_counter.json
+media
