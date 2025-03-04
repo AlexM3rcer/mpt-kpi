@@ -32,6 +32,7 @@ services:
       dockerfile: dev.Dockerfile
     environment:
       - DEBUG=1
+      - FLASK_APP=main
     volumes:
       - ./backend:/app
     ports:

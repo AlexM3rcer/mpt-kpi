@@ -1,20 +1,19 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
+from flask import send_from_directory
+from werkzeug.utils import secure_filename
 from os import environ
 
 from config import Config
 from extensions import db, migrate, login_manager, mail
 from resources.basic_resource import BasicResource
-from resources.pdf_resource import PDFResource
+from resources.files_resource import FilesResource
 from resources.employees_resource import EmployeesResource
 from resources.criteries_resource import CriteriesResource
 from resources.certificates_resource import CertificatesResource
 from auth import auth_bp
 from routes import bp as main_bp
-
-PORT = environ.get('BACKEND_PORT', 8000)
-DEBUG = environ.get('DEBUG', True)
 
 
 app = Flask(__name__)
@@ -26,7 +25,7 @@ app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5 MB limit for uploads
 
 api = Api(app)
 api.add_resource(BasicResource, '/api', '/api/<int:source_id>')
-api.add_resource(PDFResource, '/api/media/', '/api/media/<string:filename>')
+api.add_resource(FilesResource, '/api/media/', '/api/media/<int:file_id>')
 api.add_resource(EmployeesResource, '/api/employees/', '/api/employees/')
 api.add_resource(CriteriesResource, '/api/criteries/', '/api/criteries/')
 api.add_resource(CertificatesResource, '/api/certificates/', '/api/certificates/')
@@ -54,6 +53,10 @@ app.register_blueprint(auth_bp)
 def index():
     return render_template('index.html')
 
-PORT = environ.get('BACKEND_PORT', 8000)
-DEBUG = environ.get('DEBUG', True)
-app.run(extra_files=[], debug=DEBUG, host='0.0.0.0', port=PORT)
+if Config.DEBUG:
+    @app.route('/media/<path:filename>', methods=['GET'])
+    def media(filename: str):
+        return send_from_directory(Config.MEDIA_ROOT, filename)
+
+if __name__ == '__main__':
+    app.run(extra_files=[], debug=Config.DEBUG, host='0.0.0.0', port=Config.PORT)
