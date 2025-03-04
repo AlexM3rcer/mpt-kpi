@@ -111,7 +111,7 @@ export default {
 			console.log(file)
 
 			const formData = new FormData()
-			formData.append('image', file)
+			formData.append('file', file)
 
 			const url = '/api/media/'
 			return axios.post(url, formData)
