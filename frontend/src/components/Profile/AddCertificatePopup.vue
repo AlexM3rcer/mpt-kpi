@@ -2,12 +2,12 @@
 	<popup-type-minimal v-if="modelValue" v-bind="$attrs" @close="$emit('update:modelValue', false)">
 		<div class="add-cerificate">
 			<h2 class="popup-title">Добавить сертификат</h2>
-			<form class="cerificate-form">
+			<form class="cerificate-form" action="/api/media/" method="POST" @submit.prevent="onSubmit">
 				<div class="form-inputs">
-					<select class="input">
+					<select class="input" ref="criteriaSelect">
 						<option>Название критерия</option>
 					</select>
-					<many-file-input />
+					<many-file-input @files-sent="handleFiles" />
 					<!--<input
             class="input file-input"
             type="file"
@@ -26,14 +26,92 @@
 <script>
 import PopupTypeMinimal from '@/components/Popup/TypeMinimal.vue'
 import ManyFileInput from '@/components/Utils/ManyFileInput.vue'
+import axios from 'axios';
 
 export default {
-	props: ['modelValue'],
+	props: ['modelValue', 'criteries'],
+
+    data() {
+        return {
+            files: [],
+            criteries: this.criteries
+        }
+    },
 
 	components: {
 		PopupTypeMinimal,
 		ManyFileInput,
 	},
+
+    methods: {
+        updateCriteries() {
+            const selectElement = this.$refs.criteriaSelect
+            selectElement.innerHTML = '<option disabled selected>Название критерия</option>';
+
+            this.criteries.forEach(criteria => {
+                const optionElement = document.createElement('option')
+                optionElement.value = criteria.id
+                optionElement.textContent = criteria.name
+                selectElement.appendChild(optionElement)
+                })
+        },
+
+        async onSubmit() {
+            const selectedCriteria = this.$refs.criteriaSelect.value
+            console.log(this.files)
+
+            if (selectedCriteria == 'Название критерия') {
+                alert('Выберите критерий')
+                return
+            }
+
+            if (!this.files || this.files.length == 0) {
+                alert('Добавьте файлы')
+                return
+            }
+
+            let formData = new FormData()
+            let filesId = []
+
+            this.files.forEach(file => {
+                filesId.push(file.id)
+            })
+
+            console.log(selectedCriteria)
+            console.log(filesId)
+            formData.append('criterion', selectedCriteria)
+            formData.append('files', filesId)
+
+            try {
+                let response = await axios.post('/api/media/', formData)
+                
+                this.$emit('close')
+
+                console.log('Ответ сервера:', response.data)
+            } catch (error) {
+                console.error('Ошибка:', error)
+            }
+        },
+
+        handleFiles(array) {
+            this.files = array;
+        }
+    },
+
+    watch: {
+        modelValue(newVal) {
+            console.log('modelValue changed:', newVal)
+            if (newVal) {
+                this.updateCriteries()
+            }
+        }
+    },
+
+    mounted() {
+        if (this.modelValue) {
+            this.updateCriteries()
+        }
+    },
 }
 </script>
 
